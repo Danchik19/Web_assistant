@@ -1,2 +1,17 @@
-# Секретная информация
-.env
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Python's cache directories
+__pycache__/
+
+# Ignore SQLite database file
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore user-uploaded media files
+media/
+
+# Ignore environment files
+*.env
