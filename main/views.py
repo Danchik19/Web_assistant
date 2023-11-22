@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
 
-def func_main(request):
-    return render(request, 'main/func_main.html')
+def index(request):
+    return render(request, 'main/index.html')
 
-def func_settings(request):
-    return render(request, 'main/func_settings.html')
+def settings(request):
+    return render(request, 'main/settings.html')
 
-def func_opportunities(request):
-    return render(request, 'main/func_opportunities.html')
+def about(request):
+    return render(request, 'main/about.html')
