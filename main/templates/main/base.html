@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="static/css/main.css" >
 </head>
+
 <body>
+    <div class="header">
+        <div class="container">
+            <div class="header-line">
+                <div class="header-logo">
+                    <a class="logo-item" href="/">
+                        <img src="static/images/logo.png" alt="">
+                    </a>
+                </div>
+
+                <div class="nav">
+                    <a class="nav-item" href="/about">
+                        <img class="img-nav-item" src="static/images/about.png" alt="">
+                    </a>
+                    <a class="nav-item" href="/settings">
+                        <img class="img-nav-item" src="static/images/settings.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     {% block body %}{% endblock %}
 </body>
+
 </html>

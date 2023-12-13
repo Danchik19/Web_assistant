@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container{
+    margin: 0px;
+}
+
+.header{
+    background-color: rgba(137, 43, 226, 0.4);
+    border-bottom: 4px solid rgba(84, 84, 84, 0.803);
+}
+
+.header-line{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item{
+    margin-right: 25px;
+    
+}
+
