@@ -1,9 +1,26 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-Главная страницa
+Web-Assistant
 {% endblock %}
 
 {% block body %}
-<h1>Главная страница</h1>
+<div id="chat-box">
+    <div id="messages">
+        <div class="message received">
+            <span class="username">Ёжик:</span>
+            <span class="content">Здравствуй, введи свое сообщение, чтобы начать чат!</span>
+        </div>
+        <!-- <div class="message sent">
+            <span class="username">Me:</span>
+            <span class="content"></span>
+        </div> -->
+    </div>
+    <div id="input-box">
+        <input type="text" id="message-input" placeholder="Введите свое сообщение">
+        <button id="send-btn">
+            <img class="send-img" src="static/images/send.png" alt="" />
+        </button>
+    </div>
+</div>
 {% endblock %}
