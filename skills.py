@@ -1,8 +1,10 @@
 def weather():
-    print('weather')
+    print("weather")
+
 
 def passive():
-    print('passive')
+    print("passive")
+
 
 def offassistant():
-    print('отключился')
+    print("отключился")

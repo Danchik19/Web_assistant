@@ -8,26 +8,25 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from skills import *
 
-
 q = queue.Queue()
-
-model = vosk.Model('vosk_model')
-
+model = vosk.Model("vosk_model")
 device = sd.default.device
-samplerate = int(sd.query_devices(device[0], 'input')['default_samplerate'])
+samplerate = int(sd.query_devices(device[0], "input")["default_samplerate"])
+
 
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
 
+
 def recognize(data, vectorizer, clf):
-    trg = words.TRIGGERS_MAN.intersection(data.split())
+    trg = words.TRIGGERS.intersection(data.split())
     if not trg:
         return
     
     # Удаляем имя ассистента, если мы к нему обратились
     data = data.split()
-    filtered_data = [word for word in data if word not in words.TRIGGERS_MAN]
-    data = ' '.join(filtered_data)
+    filtered_data = [word for word in data if word not in words.TRIGGERS]
+    data = " ".join(filtered_data)
 
     # Преобразуем команду пользователя в числовой вектор
     user_vector = vectorizer.transform([data])
@@ -43,17 +42,18 @@ def recognize(data, vectorizer, clf):
     if max_probability >= threshold:
         answer = clf.classes_[predicted_probabilities[0].argmax()]
     else:
-        voice.speaker_silero('Я пока не знаю такой команды, но ты можешь меня научить ей')
+        voice.speaker_silero("Я пока не знаю такой команды, но ты можешь меня научить ей")
         return
     
     # Получаем имя функции из ответа data_set
     func_name = answer.split()[0]
 
     # Озвучиваем ответ из data_set
-    voice.speaker_silero(answer.replace(func_name, ''))
+    voice.speaker_silero(answer.replace(func_name, ""))
 
     # Вызываем функцию по запросу
-    exec(func_name + '()')
+    exec(func_name + "()")
+
 
 def main():
     vectorizer = CountVectorizer()
@@ -71,10 +71,9 @@ def main():
         while True:
             data = q.get()
             if rec.AcceptWaveform(data):
-                data = json.loads(rec.Result())['text']
+                data = json.loads(rec.Result())["text"]
                 recognize(data, vectorizer, clf)
-            #else:
-            #    print(rec.PartialResult())
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
