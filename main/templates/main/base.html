@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/styles/style.css">
-    <script src="static/scripts/script.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <title>{% block title %}{% endblock %}</title>
-</head>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <script src="static/scripts/script.js" defer></script>
+        <title>{% block title %}{% endblock %}</title>
+    </head>
 
-<body>
-    <header>
-        <div class="header">
-            <div class="container">
-                <div class="header-line">
-                    <div class="header-logo">
-                        <a class="logo-item" href="/">
-                            <img class="img-nav-item" src="static/images/logo.png" alt=""/>
+    <body>
+        <header>
+            <div class="site-header">
+                <div class="container">
+                    <div class="header-elements">
+                        <a class="img-logo" href="/">
+                            <img src="static/images/logo.png" alt="Логотип"/>
                         </a>
-                    </div>
-
-                    <div class="nav">
-                        <a class="nav-item" href="/about">
-                            <img class="img-nav-item" src="static/images/about.png" alt="" />
-                        </a>
-                        <a class="nav-item" href="/settings">
-                            <img class="img-nav-item" src="static/images/settings.png" alt="" />
-                        </a>
+                        <span class="name-site">Web-Assistant</span>
+                        <div class="about-settings">
+                            <a class="img-about" href="/about">
+                                <img src="static/images/about.png" alt="Возможности" />
+                            </a>
+                            <a class="img-settings" href="/settings">
+                                <img src="static/images/settings.png" alt="Настройки" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-    {% block body %}{% endblock %}
-</body>
+        </header>
+        {% block body %}{% endblock %}
+    </body>
 
 </html>

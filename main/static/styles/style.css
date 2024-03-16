@@ -1,79 +1,451 @@
 body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-}
-
-header {
-    background-color: rgba(137, 43, 226, 0.4);
-    border-bottom: 4px solid rgba(84, 84, 84, 0.803);
-}
-
-.header-line {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1vw;
-}
-
-.nav-item {
-    margin-left: 1vw;
-}
-
-.img-nav-item {
-    height: 7vw;
-}
-
-#chat-box {
+    min-height: 100vh;
     margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
+    font-family: 'Open Sans', sans-serif;
+    background: rgb(233, 233, 233);
 }
 
-#messages {
-    margin-top: 6px;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
+body::-webkit-scrollbar {
+    width: 8px;
 }
 
-.message {
-    margin-bottom: 10px;
-    padding: 5px;
-    border-radius: 5px;
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(84, 84, 84, 0.299);
+    border-radius: 20px;
 }
 
-.received {
-    background-color: #e5e5ea;
+.container {
+    max-width: 1000px;
+    padding: 0 60px;
+    margin: 0 auto;
 }
 
-.sent {
-    background-color: rgba(137, 43, 226, 0.566);
-    color: white;
-    text-align: right;
+.site-header {
+    padding: 14px 0;
+    background-color: rgba(115, 24, 201, 0.635);
+    border-bottom: 1px solid rgba(84, 84, 84, 0.299);
 }
 
-.username {
+.header-elements {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-site {
+    color: rgb(255, 255, 255);
+    font-size: 32px;
     font-weight: bold;
 }
 
-#input-box {
-    margin-top: 10px;
+.about-settings {
     display: flex;
 }
 
-#message-input {
-    flex-grow: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.img-logo img {
+    width: 100px;
+    height: auto;
 }
 
-#send-btn {
-    margin-left: 5px;
+.img-about img {
+    margin-right: 8px;
+    width: 100px;
+    height: auto;
+}
+
+.img-settings img {
+    margin-left: 8px;
+    width: 100px;
+    height: auto;
+}
+
+.hedgehog img {
+    width: 45px;
+    height: auto;
+}
+
+.chat-body {
+    height: 80vh;
+    display: flex;
+}
+
+.container-body {
+    width: 1000px;
+    padding: 0 60px;
+    margin: 0 auto;
+}
+
+.current-chat {
+    margin-top: 20px;
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgba(84, 84, 84, 0.299);
+}
+
+.chatbox::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatbox::-webkit-scrollbar-thumb {
+    background-color: rgba(84, 84, 84, 0.299);
+    border-radius: 20px;
+}
+
+.chatbox {
+    list-style-type: none;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px 20px;
+    margin: 20px 0;
+}
+
+.chatbox .chat {
+    display: flex;
+}
+
+.chatbox p {
+    color: rgb(255, 255, 255);
+    max-width: 75%;
+    white-space: pre-wrap;
+    font-size: 1.0rem;
+    padding: 12px 16px;
+    border-radius: 10px 10px 0 10px;
+    background: rgba(115, 24, 201, 0.635);
+}
+
+.chatbox .chat p.error {
+    color: rgb(118, 39, 39);
+    background: rgb(255, 218, 221);
+}
+
+.chatbox .incoming p {
+    color: rgba(0, 0, 0, 1);
+    border-radius: 10px 10px 10px 0;
+    background: rgb(233, 233, 233);
+}
+
+.chatbox .incoming span {
+    align-self: flex-end;
+    margin: 0 10px 7px 0;
+}
+
+.chatbox .outgoing {
+    margin: 20px 0;
+    justify-content: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    padding: 12px 20px;
+    border-top: 1px solid rgba(84, 84, 84, 0.299);
+}
+
+.letter img {
+    width: 30px;
+    height: auto;
+}
+
+.microphone img {
+    width: 30px;
+    height: auto;
+}
+
+.chat-input textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat-input textarea::-webkit-scrollbar-thumb {
+    background-color: rgba(84, 84, 84, 0.299);
+    border-radius: 20px;
+}
+
+.chat-input textarea {
+    font-family: inherit;
+    font-size: inherit;
+    height: 30px;
+    max-height: 180px;
+    flex-grow: 1;
     border: none;
+    outline: none;
+    resize: none;
+    margin-right: 25px;
+    padding: 4px 25px 2px 0;
+    box-sizing: border-box;
+}
+
+.chat-input .button {
+    align-items: center;
+    line-height: 30px;
+}
+
+.letter {
+    margin-right: 3px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.microphone {
+    margin-left: 3px;
     cursor: pointer;
 }
 
-.send-img{
-    height: 3.5vw;
+.chat-input textarea:valid ~ .button .letter {
+    visibility: visible;
+}
+
+@media (768px < width <= 992px) {
+    .container {
+        padding: 0 50px;
+    }
+
+    .container-body {
+        padding: 0 50px;
+    }
+
+    .current-chat {
+        margin-top: 16px;
+        height: calc(100% - 34px);
+    }
+
+    .name-site {
+        font-size: 26px;
+    }
+
+    .img-logo img {
+        width: 70px;
+    }
+    
+    .img-about img {
+        margin-right: 6px;
+        width: 70px;
+    }
+    
+    .img-settings img {
+        margin-left: 6px;
+        width: 70px;
+    }
+
+    .chatbox {
+        margin: 16px 0;
+        padding: 8px 16px;
+    }
+
+    .chatbox p {
+        padding: 10px 14px;
+        font-size: 1.0rem;
+    }
+
+    .chatbox .outgoing {
+        margin: 16px 0;
+    }
+
+    .hedgehog img {
+        width: 40px;
+    }
+
+    .chat-input textarea {
+        font-size: 1.0rem;
+    }
+}
+
+@media (480px < width <= 768px) {
+    .container {
+        padding: 0 18px;
+    }
+
+    .container-body {
+        padding: 0 18px;
+    }
+
+    .current-chat {
+        margin-top: 10px;
+        height: calc(100% - 22px);
+    }
+
+    .name-site {
+        font-size: 22px;
+    }
+
+    .img-logo img {
+        width: 60px;
+    }
+    
+    .img-about img {
+        margin-right: 4px;
+        width: 60px;
+    }
+    
+    .img-settings img {
+        margin-left: 4px;
+        width: 60px;
+    }
+
+    .chatbox {
+        margin: 14px 0;
+        padding: 8px 14px;
+    }
+
+    .chatbox p {
+        padding: 10px 12px;
+        font-size: 0.90rem;
+    }
+    
+    .chatbox .incoming span {
+        margin: 0 8px 5px 0;
+    }
+
+    .chatbox .outgoing {
+        margin: 12px 0;
+    }
+
+    .hedgehog img {
+        width: 35px;
+    }
+
+    .chat-input textarea {
+        margin-right: 10px;
+        padding: 4px 10px 2px 0;
+        font-size: 0.90rem;
+    }
+}
+
+@media (320px < width <= 480px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .container-body {
+        padding: 0 12px;
+    }
+
+    .current-chat {
+        margin-top: 8px;
+        height: calc(100% - 18px);
+    }
+
+    .name-site {
+        font-size: 16px;
+    }
+
+    .img-logo img {
+        width: 56px;
+    }
+    
+    .img-about img {
+        margin-right: 3px;
+        width: 56px;
+    }
+    
+    .img-settings img {
+        margin-left: 3px;
+        width: 56px;
+    }
+
+    .chatbox {
+        margin: 10px 0;
+        padding: 6px 10px;
+    }
+
+    .chatbox p {
+        padding: 8px 10px;
+        font-size: 0.90rem;
+    }
+    
+    .chatbox .incoming span {
+        margin: 0 6px 4px 0;
+    }
+
+    .chatbox .outgoing {
+        margin: 10px 0;
+    }
+
+    .hedgehog img {
+        width: 35px;
+    }
+
+    .chat-input textarea {
+        margin-right: 10px;
+        padding: 4px 10px 2px 0;
+        font-size: 0.90rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 8px;
+    }
+
+    .container-body {
+        padding: 0 8px;
+    }
+
+    .current-chat {
+        margin-top: 6px;
+        height: calc(100% - 16px);
+    }
+
+    .name-site {
+        font-size: 13px;
+    }
+
+    .img-logo img {
+        width: 48px;
+    }
+    
+    .img-about img {
+        margin-right: 2px;
+        width: 48px;
+    }
+    
+    .img-settings img {
+        margin-left: 2px;
+        width: 48px;
+    }
+
+    .chatbox {
+        margin: 6px 0;
+        padding: 5px 6px;
+    }
+
+    .chatbox p {
+        padding: 6px 8px;
+        font-size: 0.80rem;
+    }
+    
+    .chatbox .incoming span {
+        margin: 0 5px 4px 0;
+    }
+
+    .chatbox .outgoing {
+        margin: 6px 0;
+    }
+
+    .hedgehog img {
+        width: 30px;
+    }
+
+    .letter img {
+        width: 25px;
+    }
+    
+    .microphone img {
+        width: 25px;
+    }
+
+    .chat-input textarea {
+        margin-right: 6px;
+        padding: 4px 9px 2px 0;
+        font-size: 0.80rem;
+    }
+
+    .chat-input {
+        padding: 12px 14px;
+    }
 }
