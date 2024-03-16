@@ -5,22 +5,33 @@ Web-Assistant
 {% endblock %}
 
 {% block body %}
-<div id="chat-box">
-    <div id="messages">
-        <div class="message received">
-            <span class="username">Ёжик:</span>
-            <span class="content">Здравствуй, введи свое сообщение, чтобы начать чат!</span>
+<form method="post" class="chat-body">
+    {% csrf_token %}
+    <div class="menu-chats">
+        
+    </div>
+    <div class="container-body">
+        <div class="current-chat">
+            <ul class="chatbox">
+                <li class="chat incoming">
+                    <span class="hedgehog">
+                        <img src="static/images/hedgehog.png", alt="img-hedgehog"/>
+                    </span>
+                    <p>Привет 👋<br>Меня зовут Ёжик, и я твой помощник.<br>Спроси меня о чём-нибудь.</p>
+                </li>
+            </ul>
+            <div class="chat-input">
+                <textarea placeholder="Введите сообщение..." required></textarea>
+                <div class="button">
+                    <span class="letter">
+                        <img src="static/images/letter.png", alt="img-letter"/>
+                    </span>
+                    <span class="microphone">
+                        <img src="static/images/microphone.png", alt="img-microphoneg"/>
+                    </span>
+                </div>
+            </div>
         </div>
-        <!-- <div class="message sent">
-            <span class="username">Me:</span>
-            <span class="content"></span>
-        </div> -->
     </div>
-    <div id="input-box">
-        <input type="text" id="message-input" placeholder="Введите свое сообщение">
-        <button id="send-btn">
-            <img class="send-img" src="static/images/send.png" alt="" />
-        </button>
-    </div>
-</div>
+</form>
 {% endblock %}
