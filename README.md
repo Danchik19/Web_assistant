@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 # Как запустить сайт
 
-1. Скачайте [архив с .env файлом](https://disk.yandex.ru/d/EFY0WDX_Xm7guw~ "Я .env")
+1. Скачайте [архив с .env файлом](https://disk.yandex.ru/d/be1z_W9cmZBmrw "Я .env")
 2. Откройте его (вас попросят ввести пароль)
 
 **Внимание!** Пароль выдаётся каждому участнику проекта
