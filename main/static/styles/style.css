@@ -64,6 +64,10 @@ body::-webkit-scrollbar-thumb {
     height: auto;
 }
 
+.empty_img {
+    padding-left: 45px;
+}
+
 .chat-body {
     height: 80vh;
     display: flex;
@@ -196,11 +200,112 @@ body::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
-.chat-input textarea:valid ~ .button .letter {
+.chat-input textarea:valid~.button .letter {
     visibility: visible;
 }
 
-@media (768px < width <= 992px) {
+/* Стили контейнера*/
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+/* Скрыть стандартное оформление checkbox*/
+.switch__input {
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+
+/* Слайдер*/
+.switch__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 34px;
+    background-color: #ccc;
+    transition: .5s;
+}
+
+.switch__slider::before {
+    content: "";
+    position: absolute;
+    cursor: pointer;
+    left: 4px;
+    bottom: 4px;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    background-color: white;
+    transition: .5s;
+}
+
+/* Стили при фокусе на компонент*/
+.switch__input:focus+.switch__slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+/* Стили при выборе флага компонента*/
+.switch__input:checked+.switch__slider {
+    background-color: #2196f3;
+}
+
+.switch__input:checked+.switch__slider::before {
+    /* Зависит от ширины компонента*/
+    transform: translateX(26px);
+}
+
+.change-lang {
+    display: flex;
+    justify-content: center;
+}
+
+.text-lang {
+    margin: .5% 1% 1% 1%;
+}
+
+.change-theme {
+    display: flex;
+    justify-content: center;
+}
+
+.text-theme {
+    margin: .5% 1% 1% 1%;
+}
+
+.text-settings-lang {
+    margin: .5% 1% 1% 1%;
+    display: flex;
+    justify-content: center;
+
+    color: rgb(255, 255, 255);
+    white-space: pre-wrap;
+    font-size: 1.0rem;
+    padding: 12px 16px;
+    border-radius: 10px 10px 0 10px;
+    background: rgba(115, 24, 201, 0.635);
+}
+
+.text-settings-theme {
+    margin: 1.5% 1% 1% 1%;
+    display: flex;
+    justify-content: center;
+
+    color: rgb(255, 255, 255);
+    white-space: pre-wrap;
+    font-size: 1.0rem;
+    padding: 12px 16px;
+    border-radius: 10px 10px 0 10px;
+    background: rgba(115, 24, 201, 0.635);
+}
+
+
+@media (768px < width <=992px) {
     .container {
         padding: 0 50px;
     }
@@ -221,12 +326,12 @@ body::-webkit-scrollbar-thumb {
     .img-logo img {
         width: 70px;
     }
-    
+
     .img-about img {
         margin-right: 6px;
         width: 70px;
     }
-    
+
     .img-settings img {
         margin-left: 6px;
         width: 70px;
@@ -250,12 +355,14 @@ body::-webkit-scrollbar-thumb {
         width: 40px;
     }
 
+
+
     .chat-input textarea {
         font-size: 1.0rem;
     }
 }
 
-@media (480px < width <= 768px) {
+@media (480px < width <=768px) {
     .container {
         padding: 0 18px;
     }
@@ -276,12 +383,12 @@ body::-webkit-scrollbar-thumb {
     .img-logo img {
         width: 60px;
     }
-    
+
     .img-about img {
         margin-right: 4px;
         width: 60px;
     }
-    
+
     .img-settings img {
         margin-left: 4px;
         width: 60px;
@@ -296,7 +403,7 @@ body::-webkit-scrollbar-thumb {
         padding: 10px 12px;
         font-size: 0.90rem;
     }
-    
+
     .chatbox .incoming span {
         margin: 0 8px 5px 0;
     }
@@ -309,6 +416,7 @@ body::-webkit-scrollbar-thumb {
         width: 35px;
     }
 
+
     .chat-input textarea {
         margin-right: 10px;
         padding: 4px 10px 2px 0;
@@ -316,7 +424,7 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-@media (320px < width <= 480px) {
+@media (320px < width <=480px) {
     .container {
         padding: 0 12px;
     }
@@ -337,12 +445,12 @@ body::-webkit-scrollbar-thumb {
     .img-logo img {
         width: 56px;
     }
-    
+
     .img-about img {
         margin-right: 3px;
         width: 56px;
     }
-    
+
     .img-settings img {
         margin-left: 3px;
         width: 56px;
@@ -357,7 +465,7 @@ body::-webkit-scrollbar-thumb {
         padding: 8px 10px;
         font-size: 0.90rem;
     }
-    
+
     .chatbox .incoming span {
         margin: 0 6px 4px 0;
     }
@@ -369,6 +477,8 @@ body::-webkit-scrollbar-thumb {
     .hedgehog img {
         width: 35px;
     }
+
+
 
     .chat-input textarea {
         margin-right: 10px;
@@ -398,12 +508,12 @@ body::-webkit-scrollbar-thumb {
     .img-logo img {
         width: 48px;
     }
-    
+
     .img-about img {
         margin-right: 2px;
         width: 48px;
     }
-    
+
     .img-settings img {
         margin-left: 2px;
         width: 48px;
@@ -418,7 +528,7 @@ body::-webkit-scrollbar-thumb {
         padding: 6px 8px;
         font-size: 0.80rem;
     }
-    
+
     .chatbox .incoming span {
         margin: 0 5px 4px 0;
     }
@@ -431,10 +541,12 @@ body::-webkit-scrollbar-thumb {
         width: 30px;
     }
 
+
+
     .letter img {
         width: 25px;
     }
-    
+
     .microphone img {
         width: 25px;
     }

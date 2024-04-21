@@ -5,5 +5,38 @@
 {% endblock %}
 
 {% block body %}
-<h1>Настройки</h1>
+<div class="container-body">
+    <div class="current-chat">
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <span class="hedgehog">
+                    <img src="static/images/hedgehog.png" , alt="img-hedgehog" />
+                </span>
+                <p>Привет 👋<br>Меня зовут Ёжик, и я твой помощник.<br>Здесь вы можете меня настроить.</p>
+            </li>
+
+            <div class="text-settings-lang">Смена языка:</div>
+            <div class="change-lang">
+                <div class="text-lang">Ru</div>
+                <label class="switch">
+                    <input type="checkbox" class="switch__input">
+                    <span class="switch__slider"></span>
+                </label>
+                <div class="text-lang">En</div>
+            </div>
+
+            <div class="text-settings-theme">Смена темы:</div>
+            <div class="change-theme">
+                <div class="text-theme">Светлая</div>
+                <label class="switch">
+                    <input type="checkbox" class="switch__input">
+                    <span class="switch__slider"></span>
+                </label>
+                <div class="text-theme">Темная</div>
+            </div>
+
+            <div class="empty"></div>
+        </ul>
+    </div>
+</div>
 {% endblock %}
