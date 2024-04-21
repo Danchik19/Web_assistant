@@ -1,9 +1,26 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-Возможности
+Обо мне
 {% endblock %}
 
 {% block body %}
-<h1>Возможности</h1>
+<div class="container-body">
+    <div class="current-chat">
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <span class="hedgehog">
+                    <img src="static/images/hedgehog.png" , alt="img-hedgehog" />
+                </span>
+                <p>Привет 👋<br>Меня зовут Ёжик, и я твой помощник. Здесь вы можете узнать обо мне чуть больше.</p>
+            </li>
+            <li class="chat incoming">
+                <p class="empty_img">Я был разработан для выполнения проекта по курсовой работе по дисциплине "Проектная деятельность"💼.</p>
+            </li>
+            <li class="chat incoming">
+                <p class="empty_img">Люди, которые меня создали👨‍💻:<br><br>✅ Данил Кузьмин<br>✅ Никита Долгих<br>✅ Кирилл Бычков<br>✅ Роман Блинов</p>
+            </li>
+        </ul>
+    </div>
+</div>
 {% endblock %}
