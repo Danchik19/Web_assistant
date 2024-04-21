@@ -2,69 +2,59 @@ import words
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 
-def there_is_trigger(data):
-    """
-    Функция проверяет наличие имени помощника в запросе.
-    """
 
-    trg = words.TRIGGERS.intersection(data.split())
-    return trg
-
-
-def get_answer(data, vectorizer, clf):
-    """
-    Функция преобразует команду пользователя в числовой вектор.
-    Предсказывает вероятности принадлежности к каждому классу.
-    Выбирает ответ из data_set (words.py),
-    если наибольшая вероятность превышает заданный порог.
-    """
-
-    data = data.split()
-    filtered_data = [word for word in data if word not in words.TRIGGERS]
-    data = " ".join(filtered_data)
-
-    user_vector = vectorizer.transform([data])
-    predicted_probabilities = clf.predict_proba(user_vector)
-
-    threshold = 0.2
-
-    max_probability = max(predicted_probabilities[0])
-    if max_probability >= threshold:
-        answer = clf.classes_[predicted_probabilities[0].argmax()]
-    else:
-        answer = False
+class Assistant:
+    def __init__(self, message: str="") -> None:
+        self.message = message
+        self.vectorizer = CountVectorizer()
+        self.vectors = self.vectorizer.fit_transform(list(words.data_set.keys()))
+        self.clf = LogisticRegression()
+        self.clf.fit(self.vectors, list(words.data_set.values()))
     
-    return answer
+    def GetAnswer(self) -> str:
+        """
+        Метод возвращает ответ на запрос пользователя.
+        """
 
+        answer = "error Пожалуйста, обратись ко мне по имени)"
+        if self.ThereIsTrigger(self.message):
+            good = self.ProcessingMessage(self.message, self.vectorizer, self.clf)
+            answer = good if good else "error Я не знаю такой команды("
+            
+        return answer
 
-def punct_marks(data):
-    """
-    Функция расставляет знаки препинания в запросе.
-    """
-    
-    edit_data = data
+    def ThereIsTrigger(self, data: str) -> set[str]:
+        """
+        Метод проверяет наличие имени помощника в запросе.
+        """
 
-    return edit_data
+        trg = words.TRIGGERS.intersection(data.split())
+        return trg
 
+    def ProcessingMessage(self, data: str, vectorizer: CountVectorizer, clf: LogisticRegression) -> str:
+        """
+        Метод преобразует команду пользователя в числовой вектор.
+        Предсказывает вероятности принадлежности к каждому классу.
+        Выбирает ответ из data_set (words.py),
+        если наибольшая вероятность превышает заданный порог.
+        """
 
-def main(message):
-    """
-    Функция принимает запрос и возвращает ответ
-    """
+        data = data.split()
+        filtered_data = [word for word in data if word not in words.TRIGGERS]
+        data = " ".join(filtered_data)
 
-    vectorizer = CountVectorizer()
-    vectors = vectorizer.fit_transform(list(words.data_set.keys()))
+        user_vector = vectorizer.transform([data])
+        predicted_probabilities = clf.predict_proba(user_vector)
 
-    clf = LogisticRegression()
-    clf.fit(vectors, list(words.data_set.values()))
+        threshold = 0.2
 
-    answer = "error Пожалуйста, обратись ко мне по имени)"
-    if there_is_trigger(message):
-        good = get_answer(message, vectorizer, clf)
-        answer = good if good else "error Я не знаю такой команды("
+        max_probability = max(predicted_probabilities[0])
+        answer = ""
+        if max_probability >= threshold:
+            answer = clf.classes_[predicted_probabilities[0].argmax()]
         
-    return answer
-
+        return answer
 
 if __name__ == "__main__":
-    main()
+    obj = Assistant("ежик привет")
+    print(obj.GetAnswer())
