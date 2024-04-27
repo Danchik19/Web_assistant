@@ -3,7 +3,9 @@ const sendLetter = document.querySelector(".letter");
 const sendMicrophone = document.querySelector(".microphone");
 const chatbox = document.querySelector(".chatbox");
 
-let userMessage = "";
+let UserMessage = "";
+const triggers = ["еж", "ежик", "ёж", "ёжик"];
+const StopWord = "пока";
 const inputInitHight = chatInput.scrollHeight;
 
 function getCookie(name) {
@@ -24,7 +26,7 @@ function getCookie(name) {
 
 const generateResponse = (incomingChatLi) => {
   const csrftoken = getCookie("csrftoken");
-  const requestURL = "https://269e-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
+  const requestURL = "https://f749-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
   const messageElement = incomingChatLi.querySelector("p");
   
   const options = {
@@ -34,11 +36,12 @@ const generateResponse = (incomingChatLi) => {
       "X-CSRFToken": csrftoken
     },
     body: JSON.stringify({
-      message: {role: "Vasya", content: userMessage}
+      message: {role: "Vasya", content: UserMessage}
     })
   }
 
   fetch(requestURL, options).then(res => res.json()).then(data => {
+    GetVoice(data.message["content"]);
     messageElement.textContent = data.message["content"];
   }).catch((error) => {
     messageElement.classList.add("error");
@@ -59,47 +62,86 @@ const ProcessingMessage = () => {
   chatInput.value = "";
   chatInput.style.height = `${inputInitHight}px`;
 
-  chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+  chatbox.appendChild(createChatLi(UserMessage, "outgoing"));
   const incomingChatLi = createChatLi("Думает...", "incoming")
   chatbox.appendChild(incomingChatLi);
   chatbox.scrollTo(0, chatbox.scrollHeight);
 
   setTimeout(() => {
     generateResponse(incomingChatLi);
-  }, 800);
+  }, 600);
 }
 
-const microphoneChat = () => {
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-  recognition.interimResults = true;
-  recognition.lang = "ru-RU";
+window.speechSynthesis.onvoiceschanged = function() {
+  window.speechSynthesis.getVoices();
+};
+
+const GetVoice = (text) => {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = window.speechSynthesis.getVoices()[1];
+  window.speechSynthesis.speak(utterance);
+}
+
+const InternalRecognizer = () => {
+  const InRecognizer = new SpeechRecognition();
+  InRecognizer.interimResults = true;
+  InRecognizer.lang = "ru-RU";
+  var check = false;
   
-  recognition.onresult = (e) => {
+  InRecognizer.start();
+
+  InRecognizer.onresult = (e) => {
     var result = e.results[e.resultIndex];
     if (!result.isFinal) {
-      chatInput.value = result[0].transcript;
+      if (result[0].transcript.toLowerCase() === StopWord) {
+        check = true;
+        return;
+      }
+      else chatInput.value = result[0].transcript;
     }
   };
-  
-  recognition.start();
 
-  recognition.onend = () => {
-    userMessage = chatInput.value;
-    if (userMessage) {
-      ProcessingMessage();
+  InRecognizer.onend = () => {
+    if (!check) {
+      if (chatInput.value) {
+        UserMessage = chatInput.value;
+        ProcessingMessage();
+      }
+      InRecognizer.start();
     }
-    else {
-      const incomingChatLi = createChatLi("Ты хотел(а) мне что-то сказать?\nНе волнуйся, я никому не расскажу🤫", "incoming")
-      chatbox.appendChild(incomingChatLi);
-      chatbox.scrollTo(0, chatbox.scrollHeight);
+    else GetVoice("Пока, мой друг.");
+  };
+}
+
+const OuterRecognizer = () => {
+  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const OutRecognizer = new SpeechRecognition();
+  OutRecognizer.interimResults = false;
+  OutRecognizer.lang = "ru-RU";
+  var TempResult = "";
+  
+  OutRecognizer.start();
+
+  OutRecognizer.onresult = (e) => {
+    var result = e.results[e.resultIndex];
+    if (result.isFinal) {
+      TempResult = result[0].transcript.toLowerCase().slice(0, -1);
     }
+  };
+
+  OutRecognizer.onend = () => {
+    if (triggers.includes(TempResult)) {
+      GetVoice("Я здесь");
+      InternalRecognizer();
+    }
+    else if (!TempResult) GetVoice("Ты что-то хочешь мне сказать? Не бойся, я никому не расскажу.");
   };
 }
 
 const handleChat = () => {
-  userMessage = chatInput.value.trim();
-  if (!userMessage) return;
+  UserMessage = chatInput.value.trim();
+  if (!UserMessage) return;
   ProcessingMessage();
 }
 
@@ -116,4 +158,4 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 sendLetter.addEventListener("click", handleChat);
-sendMicrophone.addEventListener("click", microphoneChat);
+sendMicrophone.addEventListener("click", OuterRecognizer);

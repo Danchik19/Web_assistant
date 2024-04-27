@@ -16,20 +16,10 @@ class Assistant:
         Метод возвращает ответ на запрос пользователя.
         """
 
-        answer = "error Пожалуйста, обратись ко мне по имени)"
-        if self.ThereIsTrigger(self.message):
-            good = self.ProcessingMessage(self.message, self.vectorizer, self.clf)
-            answer = good if good else "error Я не знаю такой команды("
+        good = self.ProcessingMessage(self.message, self.vectorizer, self.clf)
+        answer = good if good else "error Я не знаю такой команды("
             
         return answer
-
-    def ThereIsTrigger(self, data: str) -> set[str]:
-        """
-        Метод проверяет наличие имени помощника в запросе.
-        """
-
-        trg = words.TRIGGERS.intersection(data.split())
-        return trg
 
     def ProcessingMessage(self, data: str, vectorizer: CountVectorizer, clf: LogisticRegression) -> str:
         """
@@ -38,10 +28,6 @@ class Assistant:
         Выбирает ответ из data_set (words.py),
         если наибольшая вероятность превышает заданный порог.
         """
-
-        data = data.split()
-        filtered_data = [word for word in data if word not in words.TRIGGERS]
-        data = " ".join(filtered_data)
 
         user_vector = vectorizer.transform([data])
         predicted_probabilities = clf.predict_proba(user_vector)
@@ -56,5 +42,5 @@ class Assistant:
         return answer
 
 if __name__ == "__main__":
-    obj = Assistant("ежик привет")
+    obj = Assistant("привет")
     print(obj.GetAnswer())
