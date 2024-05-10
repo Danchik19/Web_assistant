@@ -1,25 +1,28 @@
 import words
+from skills import Skills
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 
 
 class Assistant:
-    def __init__(self, message: str="") -> None:
+    _vectorizer = CountVectorizer()
+    _vectors = _vectorizer.fit_transform(list(words.data_set.keys()))
+    _clf = LogisticRegression()
+    _clf.fit(_vectors, list(words.data_set.values()))
+
+    def __init__(self, message: str, params: dict[str, str]) -> None:
         self.message = message
-        self.vectorizer = CountVectorizer()
-        self.vectors = self.vectorizer.fit_transform(list(words.data_set.keys()))
-        self.clf = LogisticRegression()
-        self.clf.fit(self.vectors, list(words.data_set.values()))
+        self.params = params
     
     def GetAnswer(self) -> str:
         """
         Метод возвращает ответ на запрос пользователя.
         """
 
-        good = self.ProcessingMessage(self.message, self.vectorizer, self.clf)
-        answer = good if good else "error Я не знаю такой команды("
-            
-        return answer
+        answer = self.ProcessingMessage(self.message, self._vectorizer, self._clf)
+        skill = Skills(self.message, answer, self.params)
+
+        return skill.MakeRequest()
 
     def ProcessingMessage(self, data: str, vectorizer: CountVectorizer, clf: LogisticRegression) -> str:
         """
@@ -35,12 +38,12 @@ class Assistant:
         threshold = 0.2
 
         max_probability = max(predicted_probabilities[0])
-        answer = ""
+        answer = "nothing"
         if max_probability >= threshold:
             answer = clf.classes_[predicted_probabilities[0].argmax()]
-        
+
         return answer
 
 if __name__ == "__main__":
-    obj = Assistant("привет")
+    obj = Assistant("Какая в Москве погода")
     print(obj.GetAnswer())
