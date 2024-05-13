@@ -9,6 +9,12 @@
 pip install -r requirements.txt
 ```
 
+При установке библиотеки spacy нужно загрузить дополнительно модель:
+
+```bash
+python -m spacy download ru_core_news_lg
+```
+
 Готово!
 
 # Как запустить сайт
