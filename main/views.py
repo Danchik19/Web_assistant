@@ -2,7 +2,7 @@ from django.shortcuts import render
 from ipware import get_client_ip
 import json
 from django.http import HttpResponse
-from assistant import Assistant
+from ChatBot.hedgehog import Hedgehog
 
 
 def index(request):
@@ -12,7 +12,7 @@ def index(request):
             match dataRequest:
                 case {"message": {"role": str() as role, "content": str() as content}}:
                     params = {"ip_client": get_client_ip(request)[0]}
-                    res = Assistant(content, params).GetAnswer()
+                    res = Hedgehog(content, params).get_answer()
                     user_info = {"role": role, "content": res}
                     context = json.dumps({"message": user_info})
 

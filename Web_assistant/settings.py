@@ -47,7 +47,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://\w+\.example\.com$",
 ]
 
-CSRF_TRUSTED_ORIGINS = ["https://924a-158-46-32-12.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = ["https://7ffe-158-46-32-12.ngrok-free.app"]
 
 ROOT_URLCONF = 'Web_assistant.urls'
 

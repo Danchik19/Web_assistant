@@ -4,7 +4,7 @@ const sendMicrophone = document.querySelector(".microphone");
 const chatbox = document.querySelector(".chatbox");
 
 let UserMessage = "";
-const myURL = "https://924a-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
+const myURL = "https://7ffe-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
 const inputInitHight = chatInput.scrollHeight;
 
 function getCookie(name) {
@@ -82,25 +82,24 @@ const GetVoice = (text) => {
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   let lst = window.speechSynthesis.getVoices();
-  utterance.voice = lst[lst.length - 1];
+  utterance.voice = lst[0];
   window.speechSynthesis.speak(utterance);
 }
 
-const Recognizer = () => {
+const Recognition = () => {
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const Recognizer = new SpeechRecognition();
-  Recognizer.interimResults = true;
-  Recognizer.lang = "ru-RU";
+  const Recognition = new SpeechRecognition();
+  Recognition.interimResults = true;
+  Recognition.lang = "ru-RU";
   
-  Recognizer.start();
+  Recognition.start();
 
-  Recognizer.onresult = (e) => {
+  Recognition.onresult = (e) => {
     var result = e.results[e.resultIndex];
-    if (!result.isFinal)
-      chatInput.value = result[0].transcript;
+    chatInput.value = result[0].transcript;
   };
 
-  Recognizer.onend = () => {
+  Recognition.onend = () => {
     UserMessage = chatInput.value.trim();
     if (!UserMessage) return;
     ProcessingMessage();
@@ -126,4 +125,4 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 sendLetter.addEventListener("click", handleChat);
-sendMicrophone.addEventListener("click", Recognizer);
+sendMicrophone.addEventListener("click", Recognition);
