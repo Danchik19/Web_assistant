@@ -4,8 +4,7 @@ const sendMicrophone = document.querySelector(".microphone");
 const chatbox = document.querySelector(".chatbox");
 
 let UserMessage = "";
-const triggers = ["еж", "ежик", "ёж", "ёжик"];
-const StopWord = "пока";
+const myURL = "https://7ffe-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
 const inputInitHight = chatInput.scrollHeight;
 
 function getCookie(name) {
@@ -24,9 +23,9 @@ function getCookie(name) {
   return cookieValue;
 }
 
-const generateResponse = (incomingChatLi) => {
+const MakeRequest = (incomingChatLi, IsHandle) => {
   const csrftoken = getCookie("csrftoken");
-  const requestURL = "https://f749-158-46-32-12.ngrok-free.app"; // http://127.0.0.1:8000/
+  const requestURL = myURL;
   const messageElement = incomingChatLi.querySelector("p");
   
   const options = {
@@ -41,10 +40,13 @@ const generateResponse = (incomingChatLi) => {
   }
 
   fetch(requestURL, options).then(res => res.json()).then(data => {
-    GetVoice(data.message["content"]);
+    if (!IsHandle)
+      GetVoice(data.message["content"]);
     messageElement.textContent = data.message["content"];
   }).catch((error) => {
-    messageElement.classList.add("error");
+    messageElement.classList.add("error")
+    if (!IsHandle)
+      GetVoice("Упс! Что-то пошло не так. Попробуй ещё раз.");
     messageElement.textContent = "Упс! Что-то пошло не так. Попробуй ещё раз.";
   }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
 }
@@ -58,7 +60,7 @@ const createChatLi = (message, className) => {
   return chatLi;
 }
 
-const ProcessingMessage = () => {
+const ProcessingMessage = (IsHandle="") => {
   chatInput.value = "";
   chatInput.style.height = `${inputInitHight}px`;
 
@@ -68,7 +70,7 @@ const ProcessingMessage = () => {
   chatbox.scrollTo(0, chatbox.scrollHeight);
 
   setTimeout(() => {
-    generateResponse(incomingChatLi);
+    MakeRequest(incomingChatLi, IsHandle);
   }, 600);
 }
 
@@ -79,70 +81,35 @@ window.speechSynthesis.onvoiceschanged = function() {
 const GetVoice = (text) => {
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = window.speechSynthesis.getVoices()[1];
+  let lst = window.speechSynthesis.getVoices();
+  utterance.voice = lst[0];
   window.speechSynthesis.speak(utterance);
 }
 
-const InternalRecognizer = () => {
-  const InRecognizer = new SpeechRecognition();
-  InRecognizer.interimResults = true;
-  InRecognizer.lang = "ru-RU";
-  var check = false;
-  
-  InRecognizer.start();
-
-  InRecognizer.onresult = (e) => {
-    var result = e.results[e.resultIndex];
-    if (!result.isFinal) {
-      if (result[0].transcript.toLowerCase() === StopWord) {
-        check = true;
-        return;
-      }
-      else chatInput.value = result[0].transcript;
-    }
-  };
-
-  InRecognizer.onend = () => {
-    if (!check) {
-      if (chatInput.value) {
-        UserMessage = chatInput.value;
-        ProcessingMessage();
-      }
-      InRecognizer.start();
-    }
-    else GetVoice("Пока, мой друг.");
-  };
-}
-
-const OuterRecognizer = () => {
+const Recognition = () => {
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const OutRecognizer = new SpeechRecognition();
-  OutRecognizer.interimResults = false;
-  OutRecognizer.lang = "ru-RU";
-  var TempResult = "";
+  const Recognition = new SpeechRecognition();
+  Recognition.interimResults = true;
+  Recognition.lang = "ru-RU";
   
-  OutRecognizer.start();
+  Recognition.start();
 
-  OutRecognizer.onresult = (e) => {
+  Recognition.onresult = (e) => {
     var result = e.results[e.resultIndex];
-    if (result.isFinal) {
-      TempResult = result[0].transcript.toLowerCase().slice(0, -1);
-    }
+    chatInput.value = result[0].transcript;
   };
 
-  OutRecognizer.onend = () => {
-    if (triggers.includes(TempResult)) {
-      GetVoice("Я здесь");
-      InternalRecognizer();
-    }
-    else if (!TempResult) GetVoice("Ты что-то хочешь мне сказать? Не бойся, я никому не расскажу.");
+  Recognition.onend = () => {
+    UserMessage = chatInput.value.trim();
+    if (!UserMessage) return;
+    ProcessingMessage();
   };
 }
 
 const handleChat = () => {
   UserMessage = chatInput.value.trim();
   if (!UserMessage) return;
-  ProcessingMessage();
+  ProcessingMessage("handle");
 }
 
 chatInput.addEventListener("input", () => {
@@ -158,4 +125,4 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 sendLetter.addEventListener("click", handleChat);
-sendMicrophone.addEventListener("click", OuterRecognizer);
+sendMicrophone.addEventListener("click", Recognition);
