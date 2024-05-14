@@ -57,7 +57,7 @@ class Skills:
         
         response = requests.get(url, params=weather_parameters).json()
         data = response["current_condition"][0]
-        self._answer = f"{city}: {data["lang_ru"][0]["value"].lower()}, {data["temp_C"]}°C"
+        self._answer = f"{city}: {data['lang_ru'][0]['value'].lower()}, {data['temp_C']}°C"
     
     def what_date(self) -> None:
         """
