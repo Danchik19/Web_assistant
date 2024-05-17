@@ -42,18 +42,18 @@ class Skills:
         Метод определяет погоду.
         """
         
-        get_location = lambda: ipapi.location(ip=self.params.get("ip_client"), output="city")
-        location = self._geolocator.geocode(get_location())
-        city = location.address.split(", ")[0]
-
-        url = f"http://wttr.in/{city}"
-        weather_parameters = {"format": "j1", "lang": "ru"}
-
         for ent in self.doc.ents:
             if ent.label_ == "LOC":
                 city = ent.lemma_[0].upper() + ent.lemma_[1:]
                 url = f"http://wttr.in/{city}"
                 break
+        else:
+            get_location = lambda: ipapi.location(ip=self.params.get("ip_client"), output="city")
+            location = self._geolocator.geocode(get_location())
+            city = location.address.split(", ")[0]
+            url = f"http://wttr.in/{city}"
+
+        weather_parameters = {"format": "j1", "lang": "ru"}
         
         response = requests.get(url, params=weather_parameters).json()
         data = response["current_condition"][0]

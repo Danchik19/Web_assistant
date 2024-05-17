@@ -5,22 +5,64 @@
     },
     {"tag" : "прощание",
     "patterns": ["Пока", "Увидимся позже", "До свидания"],
-    "responses": ["Увидимся позже, спасибо за визит", "Хорошего дня", "Пока! Возвращайтесь скоро."]
+    "responses": ["Увидимся позже, спасибо за визит", "Хорошего дня", "Пока! Возвращайтесь скорей."]
     },
     {"tag": "благодарность",
     "patterns": ["Спасибо", "Благодарю", "Это полезно"],
-    "responses": ["Рад помочь!", "В любое время!", "Моё удовольствие"]
+    "responses": ["Рад помочь!", "Всегда пожалуйста!", "Всегда рад помочь!"]
     },
     {"tag": "погода",
-    "patterns": ["Какая сейчас погода на улице?", "Что там на улице?", "Сколько градусов на улице?", "Какая сейчас погода в ...?"],
+    "patterns": ["Погода в ...","Какая сейчас погода на улице?", "Что там на улице?", "Сколько градусов?", "Сколько градусов на улице?", "Какая сейчас погода в ...?"],
     "responses": ["what_weather"]
     },
     {"tag": "дата",
-    "patterns": ["Какое сегодня число?", "Какой сегодня день недели?"],
+    "patterns": ["Какое сегодня число?", "Какой сегодня день недели?", "Сегодняшняя дата?"],
     "responses": ["what_date"]
     },
     {"tag": "время",
     "patterns": ["Cколько сейчас времени?", "Сколько сейчас времени в ...?"],
     "responses": ["what_time"]
+    },
+    {"tag": "вопрос",
+    "patterns": ["Что такое ...?", "Как мне добраться до ...?", "Где я могу купить ...?", "Как скачать ...?", "Где я могу найти ...?", "Как найти информацию о ...?"],
+    "responses": ["search"]
+    },
+    {"tag": "пожелание",
+    "patterns": ["Всё, я спать", "Пойду посплю"],
+    "responses": ["Доброй ночи!", "Спокойной ночи!"]
+    },
+
+
+    {"tag": "greeting",
+    "patterns": ["Hi","Hello", "Hey", "Is there anyone there?", "Good afternoon", "Good day"],
+    "responses": ["Hi","Hello", "Hey", "Glad to see you again", "Hi, how can i help you?"]
+    },
+    {"tag" : "farewell",
+    "patterns": ["Bye", "See you later", "Goodbye"],
+    "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back soon!"]
+    },
+    {"tag": "gratitude",
+    "patterns": ["Thanks", "Thank You", "It's useful"],
+    "responses": ["Glad to help!", "You're welcome!", "I'm always happy to help!"]
+    },
+    {"tag": "weather",
+    "patterns": ["Weather in ...","What is the weather like outside now?", "What's out there?", "How many degrees?", "How many degrees is it outside?", "What is the weather like in ...?"],
+    "responses": ["what_weather"]
+    },
+    {"tag": "date",
+    "patterns": ["What is the date today?", "What day of the week is today?", "Today's date?"],
+    "responses": ["what_date"]
+    },
+    {"tag": "time",
+    "patterns": ["What time is it now?"],
+    "responses": ["what_time"]
+    },
+    {"tag": "question",
+    "patterns": ["What is ...?", "How do I get to ...?", "Where can I buy ...?", "How to download ...?", "Where can I find ...?", "How to find information about ...?"],
+    "responses": ["search"]
+    },
+    {"tag": "wish",
+    "patterns": ["That's it, i'm going to sleep", "I'm going to get some sleep"],
+    "responses": ["Goodnight!"]
     }
 ]}
